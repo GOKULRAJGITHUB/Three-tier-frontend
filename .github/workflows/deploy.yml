@@ -1,0 +1,35 @@
+name: Deploy Three-Tier Frontend
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        working-directory: /home/ubuntu/Three-tier-frontend
+        run: npm install
+
+      - name: Build React application
+        working-directory: /home/ubuntu/Three-tier-frontend
+        run: npm run build
+
+      - name: Deploy frontend
+        run: |
+          sudo rm -rf /var/www/html/Three-tier-frontend/*
+          sudo cp -r /home/ubuntu/Three-tier-frontend/dist/* /var/www/html/Three-tier-frontend/
+
+      - name: Set permissions
+        run: |
+          sudo chown -R www-data:www-data /var/www/html/Three-tier-frontend
+          sudo chmod -R 755 /var/www/html/Three-tier-frontend
+
+      - name: Deployment completed
+        run: echo "Frontend deployment completed successfully."
