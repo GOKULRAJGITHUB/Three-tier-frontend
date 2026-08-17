@@ -22,24 +22,5 @@ jobs:
           script: |
             echo "Starting deployment..."
 
-            cd /home/ubuntu/Three-tier-frontend
-
-            echo "Pulling latest code..."
-            git pull origin main
-
-            echo "Installing dependencies..."
-            npm install
-
-            echo "Building React application..."
-            npm run build
-
-            echo "Deploying frontend..."
-            sudo rm -rf /var/www/html/Three-tier-frontend/*
-            sudo cp -r /home/ubuntu/Three-tier-frontend/dist/* /var/www/html/Three-tier-frontend/
-
-            echo "Setting permissions..."
-            sudo chown -R www-data:www-data /var/www/html/Three-tier-frontend
-            sudo chmod -R 755 /var/www/html/Three-tier-frontend
-
             echo "Frontend deployment completed successfully."
 
